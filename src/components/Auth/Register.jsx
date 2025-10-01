@@ -17,11 +17,22 @@ function Register() {
   };
 
   return (
-    <form onSubmit={submit}>
-      <h3>تسجيل</h3>
-      <input placeholder="اسم المستخدم" value={username} onChange={e => setUsername(e.target.value)} />
-      <input placeholder="كلمة السر" type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      <button type="submit">تسجيل</button>
+    <form onSubmit={submit} className="space-y-3">
+      <h3 className="text-lg font-semibold">تسجيل</h3>
+      <input
+       className="w-full border rounded-lg p-2"
+       placeholder="اسم المستخدم"
+       value={username} 
+       onChange={e => setUsername(e.target.value)} 
+       />
+      <input 
+      className="w-full border rounded-lg p-2"
+      placeholder="كلمة السر" 
+      type="password" 
+      value={password} 
+      onChange={e => setPassword(e.target.value)} 
+      />
+      <button className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">تسجيل</button>
     </form>
   );
 }

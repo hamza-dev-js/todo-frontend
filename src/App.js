@@ -13,34 +13,48 @@ function App() {
     try {
       const res = await api.get("/todos");
       setTodos(res.data);
-    } catch (err) {
+    } catch {
       setTodos([]);
     }
   };
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      // optional: decode token or request user profile
+      // ممكن لاحقاً نضيف API profile
     }
   }, []);
 
   return (
-    <div style={{ maxWidth: 600, margin: "auto", padding: 20 }}>
-      {!user ? (
-        <div>
-          <Login onLogin={(u) => { setUser(u); fetchTodos(); }} />
-          <Register />
-        </div>
-      ) : (
-        <div>
-          <h2>مرحبا، {user.username}</h2>
-          <button onClick={() => { localStorage.removeItem("token"); setUser(null); setTodos([]); }}>تسجيل خروج</button>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="bg-white shadow-lg rounded-xl w-full max-w-md p-6 space-y-4">
+        {!user ? (
+          <div className="space-y-6">
+            <Login onLogin={(u) => { setUser(u); fetchTodos(); }} />
+            <Register />
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-bold">مرحبا، {user.username}</h2>
+              <button
+                onClick={() => { localStorage.removeItem("token"); setUser(null); setTodos([]); }}
+                className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                خروج
+              </button>
+            </div>
 
-          <TodoForm onAdd={(newTodo) => setTodos(prev => [...prev, newTodo])} />
-          <button onClick={fetchTodos}>جلب المهام</button>
-          <TodoList todos={todos} setTodos={setTodos} />
-        </div>
-      )}
+            <TodoForm onAdd={(newTodo) => setTodos(prev => [...prev, newTodo])} />
+            <button
+              onClick={fetchTodos}
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            >
+              تحديث المهام
+            </button>
+            <TodoList todos={todos} setTodos={setTodos} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
